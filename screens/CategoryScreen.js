@@ -3,11 +3,22 @@ import CategoryGridTile from "../components/CategoryGridTile";
 
 import { CATEGORIES } from "../data/data";
 
-function renderCategoryItem({ item }) {
-  return <CategoryGridTile title={item.title} color={item.color} />;
-}
+function CategoryScreen({ navigation }) {
+  function renderCategoryItem({ item }) {
+    function pressHandler() {
+      navigation.navigate("MealOverviewScreen", {
+        categoryId: item.id,
+      });
+    }
+    return (
+      <CategoryGridTile
+        title={item.title}
+        color={item.color}
+        onPress={pressHandler}
+      />
+    );
+  }
 
-function CategoryScreen() {
   return (
     <FlatList
       data={CATEGORIES}
