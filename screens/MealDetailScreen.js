@@ -1,32 +1,53 @@
 import { useLayoutEffect } from "react";
-import { ScrollView, Text, StyleSheet, Image, View } from "react-native";
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  Button,
+} from "react-native";
 
 import { MEALS } from "../data/data";
+import MealDetails from "../components/MealDetails";
+import Subtitle from "../components/MealDetails/Subtitle";
+import List from "../components/MealDetails/List";
+import IconButton from "../components/IconButton";
 
 function MealDetailScreen({ route, navigation }) {
   const mealId = route.params.mealId;
   const [meal] = MEALS.filter((mealItem) => mealItem.id === mealId);
 
+  function headerButtonHandler() {
+    console.log("pressed");
+  }
+
   useLayoutEffect(() => {
-    navigation.setOptions({ title: meal.title });
+    navigation.setOptions({
+      title: meal.title,
+      headerRight: () => (
+        <IconButton icon={"heart"} onPress={headerButtonHandler} />
+      ),
+    });
   }, [navigation]);
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.screen}>
       <Image source={{ uri: meal.imageUrl }} style={styles.image} />
-      <View>
-        <Text>Ingreditens:</Text>
-        {meal.ingredients.map((ingredient, index) => {
-          return <Text key={index}>- {ingredient}</Text>;
-        })}
-      </View>
-      <View>
-        <Text>How to:</Text>
-        {meal.steps.map((step, index) => (
-          <Text key={index}>
-            Step {index + 1} : {step}
-          </Text>
-        ))}
+      <Text style={styles.title}>{meal.title}</Text>
+      <MealDetails
+        duration={meal.duration}
+        affordability={meal.affordability}
+        complexity={meal.complexity}
+        textStyle={styles.textStyle}
+      />
+      <View style={styles.outerListContainer}>
+        <View style={styles.listContainer}>
+          <Subtitle>Ingredients</Subtitle>
+          <List data={meal.ingredients}>-</List>
+          <Subtitle>How to</Subtitle>
+          <List data={meal.steps} />
+        </View>
       </View>
     </ScrollView>
   );
@@ -35,8 +56,28 @@ function MealDetailScreen({ route, navigation }) {
 export default MealDetailScreen;
 
 const styles = StyleSheet.create({
+  screen: {
+    marginBottom: 20,
+  },
   image: {
     width: "100%",
     height: 300,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 24,
+    margin: 8,
+    textAlign: "center",
+    color: "white",
+  },
+  textStyle: {
+    color: "white",
+  },
+  outerListContainer: {
+    width: "100%",
+    alignItems: "center",
+  },
+  listContainer: {
+    width: "80%",
   },
 });
