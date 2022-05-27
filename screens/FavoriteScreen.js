@@ -10,8 +10,6 @@ export default function FavoriteScreen() {
   // const favoriteMealCtx = useContext(FavoriteContext);
   const favoriteMealIds = useSelector((state) => state.favoriteMeal.ids);
 
-  console.log(favoriteMealIds);
-
   // const mealIdList = favoriteMealCtx.ids;
 
   // const favMealList = mealIdList.map((id) =>
@@ -20,7 +18,6 @@ export default function FavoriteScreen() {
   const favMealList = MEALS.filter((meal) => favoriteMealIds.includes(meal.id));
 
   return <MealList data={favMealList} />;
-  // return <Text>favorite scrren</Text>;
 }
 
 const styles = StyleSheet.create({});

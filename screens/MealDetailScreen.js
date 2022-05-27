@@ -8,7 +8,6 @@ import Subtitle from "../components/MealDetails/Subtitle";
 import List from "../components/MealDetails/List";
 import IconButton from "../components/IconButton";
 import { addFavorite, removeFavorite } from "../store/redux/favorite";
-import { add } from "react-native-reanimated";
 // import { FavoriteContext } from "../store/context/favorite-context";
 
 function MealDetailScreen({ route, navigation }) {
